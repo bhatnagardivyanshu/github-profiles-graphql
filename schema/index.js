@@ -14,7 +14,6 @@ const RepositoryType = new GraphQLObjectType({
   name: "Repositories",
   fields: () => ({
     name: { type: GraphQLString },
-    fullname: { type: GraphQLString },
     url: { type: GraphQLString },
     private: { type: GraphQLBoolean },
     owner: { type: OwnerType },
@@ -42,16 +41,41 @@ const LicenseType = new GraphQLObjectType({
   })
 });
 
+const UserType = new GraphQLObjectType({
+  name: "User",
+  fields: () => ({
+    login: { type: GraphQLString },
+    avatar_url: { type: GraphQLString },
+    name: { type: GraphQLString },
+    company: { type: GraphQLString }
+  })
+});
+
 // RootQuery
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
   fields: {
     repositories: {
       type: new GraphQLList(RepositoryType),
+      args: {
+        username: { type: GraphQLString }
+      },
       resolve(parent, args) {
         console.log("CALLED RESOLVE WITH", parent, args);
         return axios
-          .get("https://api.github.com/users/bhatnagardivyanshu/repos")
+          .get(`https://api.github.com/users/${args.username}/repos`)
+          .then(res => res.data);
+      }
+    },
+    user: {
+      type: UserType,
+      args: {
+        username: { type: GraphQLString }
+      },
+      resolve(parent, args) {
+        console.log("CALLED RESOLVE WITH", parent, args);
+        return axios
+          .get(`https://api.github.com/users/${args.username}`)
           .then(res => res.data);
       }
     }
