@@ -14,7 +14,7 @@ const RepositoryType = new GraphQLObjectType({
   name: "Repositories",
   fields: () => ({
     name: { type: GraphQLString },
-    url: { type: GraphQLString },
+    html_url: { type: GraphQLString },
     private: { type: GraphQLBoolean },
     owner: { type: OwnerType },
     license: { type: LicenseType }
