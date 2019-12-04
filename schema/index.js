@@ -56,18 +56,18 @@ const UserType = new GraphQLObjectType({
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
   fields: {
-    // repositories: {
-    //   type: new GraphQLList(RepositoryType),
-    //   args: {
-    //     username: { type: GraphQLString }
-    //   },
-    //   resolve(parent, args) {
-    //     console.log("CALLED RESOLVE WITH", parent, args);
-    //     return axios
-    //       .get(`https://api.github.com/users/${args.username}/repos`)
-    //       .then(res => res.data);
-    //   }
-    // },
+    repositories: {
+      type: new GraphQLList(RepositoryType),
+      args: {
+        username: { type: GraphQLString }
+      },
+      resolve(parent, args) {
+        console.log("CALLED RESOLVE WITH", parent, args);
+        return axios
+          .get(`https://api.github.com/users/${args.username}/repos`)
+          .then(res => res.data);
+      }
+    },
     user: {
       type: UserType,
       args: {
