@@ -10,7 +10,7 @@ import Users from "./components/Users";
 import RepositoryList from "./components/RepositoryList";
 
 const client = new ApolloClient({
-  uri: "http://localhost:4000/graphql"
+  uri: "/graphql"
 });
 
 class App extends React.Component {
